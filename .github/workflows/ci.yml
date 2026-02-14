@@ -1,0 +1,34 @@
+﻿name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required extension files
+        run: |
+          test -f manifest.json
+          test -f popup.html
+          test -f popup.js
+          test -f popup.css
+          test -f service-worker.js
+
+      - name: Validate manifest JSON
+        run: |
+          python - <<'PY'
+          import json
+          with open('manifest.json', 'r', encoding='utf-8') as f:
+              data = json.load(f)
+          assert data.get('manifest_version') == 3, 'manifest_version must be 3'
+          assert data.get('name'), 'name is required'
+          assert data.get('version'), 'version is required'
+          print('manifest.json is valid')
+          PY

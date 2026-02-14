@@ -1,0 +1,14 @@
+﻿{
+  "manifest_version": 3,
+  "name": "Quick Notes - Debajit",
+  "version": "1.0.0",
+  "description": "Simple Chrome extension to save quick notes locally.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Quick Notes"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": ["storage"]
+}
